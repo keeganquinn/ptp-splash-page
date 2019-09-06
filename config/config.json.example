@@ -1,6 +1,0 @@
-{
-    "apiserver" : "personaltelco.net",
-    "staticserver": "personaltelco.net",
-    "apibaseurl" : "https://personaltelco.net/api/v0",
-    "staticbaseurl": "https://personaltelco.net/splash"
-}

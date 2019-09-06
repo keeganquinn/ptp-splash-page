@@ -1,0 +1,45 @@
+body {
+    padding-top: 56px;
+    padding-bottom: 40px;
+    color: #5a5a5a;
+}
+
+.anchor {
+    padding-top: 56px;
+    margin-top: -56px;
+}
+
+.carousel .carousel-item {
+    height: 20em;
+    text-align: center;
+    color: #f8f9fa;
+    background-color: #6c757d;
+}
+
+.carousel img {
+    height: 10em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.clearfix {
+    margin-top: 5em;
+    margin-bottom: 5em;
+}
+
+.happy {
+    color: gold;
+    font-size: 10em;
+}
+
+.large {
+    font-size: 4em;
+}
+
+.terms {
+    height: 30em;
+    text-align: justify;
+    overflow: auto;
+    padding-right: 1em;
+    right: 1.5em;
+}

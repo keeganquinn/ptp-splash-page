@@ -1,17 +1,12 @@
-lib-cov
-*.seed
-*.log
-*.csv
-*.dat
-*.out
-*.pid
-*.gz
+# Local environment
+/config/config.json
+/node_modules
+/npm-debug.log
+/yarn-error.log
 
-pids
-logs
-results
-
-npm-debug.log
-node_modules
-.project
-/splashserver.js
+# Build artifacts
+/checkstyle-*.xml
+/coverage-js/
+/htdocs/splash.min.css
+/htdocs/splash.min.js
+/junit.xml

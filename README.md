@@ -1,125 +1,81 @@
 ptp-splash-page
 =============
 
-As part of the [PTP SplashPage2014](https://personaltelco.net/wiki/SplashPage2014) effort...
+This is the Personal Telco Project splash page. It is presented to users when
+they first connect to a node.
 
-The Personal Telco Project's splash page that user's see when they connect to a node and get redirected by the 'captive portal' 
+In addition to the primary function of presenting the ToS, the splash page is
+an opportunity:
+ * to educate folks about PTP
+ * to acknowledge the node host
+ * to ask for donations
+ * to acknowledge donors and contributors
 
-Benjamin Foote  
-2014-02-21   
-ben@bnf.net  
+
+Build Procedure
+---------------
+
+Node.js and Yarn are required.
+
+The build produces two artifacts: `splash.min.js` and `splash.min.css`.
+These are compiled from files in the `src` directory with the assistance of
+Webpack. Configuration can be found in `webpack.config.js`.
+
+To perform a build:
+
+````bash
+./build.sh
+````
+
+You can run a small webserver to test locally:
+
+````bash
+yarn server
+````
+
+Additional Yarn commands are listed in `package.json`.
 
 
-## About the splash page
+Design Notes
+------------
 
-When a user connects to a node, usually via wifi, they cannot immediately
-access the internet.  They are bound within a captive portal.  When they 
-try to browse to any web pages in a browser (http only) they are redirected
-by NoCatAuth to our splash page.  Once they have accepted the terms of service
-they are then allowed to access the internet. 
+The splash page is a single page app built using Bootstrap.
 
-In this way, the splash page is one of our most frequents points of interaction
-with the users of the PTP network.
-
-In addition to it's primary funciton it is an opportunity
-    - to educate folks about PTP 
-    - to acknowledge the node host
-    - to ask for donations 
-    - to acknowledge donors and contributors
+Everything that gets loaded to the browser from the router lives in `htdocs`.
 
 The splash page loads from the router and then the loaded page makes calls
-to http://static.personaltelco.net which are the static files from the
-[ptp-splash-server repo](https://github.com/personaltelco/ptp-splash-server).  The js files at 'static' then make calls to api.personaltelco.net
+to `static.personaltelco.net` which contains the static files from the
+[ptp-splash-server repo](https://github.com/personaltelco/ptp-splash-server).
+These in turn then make calls to `api.personaltelco.net`
 which is in the [ptp-api repo](https://github.com/personaltelco/ptp-api).
 
-By keeping the API separate from the router and server logic we hope to allow
-folks to easily understand which piece of the puzzle should be worked on at each point.
+By keeping the API separate from the router and server logic, we hope to allow
+folks to easily understand which piece of the puzzle should be worked on at
+each point.
 
-##  Install and build
+Some configuration is present at the end of `splash.html`:
 
-````bash
-    git clone git@github.com:personaltelco/ptp-splash-page.git
+````html
+<script>
+  var pageConf = {
+    ...
+  };
+</script>
 ````
 
-### development dependencies
-
-A recent nodejs environment is required.  If you're on Ubuntu 12.04 these instructions will be helpful:
-
-https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#wiki-ubuntu-mint-elementary-os
-
-
-### editing the splash page
-
-The splash page is a single page app built using Twitter Bootstrap and 'dust' templates using 'grunt', a nodejs build tool.
-
-Everything that gets loaded to the browser FROM THE ROUTER lives in ./htdocs
-
-The HTML page itself, splash.html is built from a dust template at ./src/dust/splash.dust.html and should be edited
-there.
-
-The supporting javascript ptp-splash-page.min.js is built from files in the
-./src directory 
-
-to setup the build environment
-
-````bash
-    npm install
-````
-
-create/edit the file config/config.json based on config.json.example
-
-
-then run
-
-````
-    make
-````
-
-which will call 'grunt'.  It will 
-   - minifiy and combine the javascript from ./src/  
-   - minifiy and combine the css from ./src  
-   - build the splash.html from dust templates  
-   
-These operations are configured in Gruntfile.js
-
-Some of the content is dynamically loaded from the server (as opposed to the router).  
-
-The file config/config.json feeds the dust template to set these variables which are later set in the HTML to be passed to
-ptp-splash-server.min.js
-
-    <script>
-        var nodeName = 'PTP_NODE_PTP';
-        var apibase = 'http://api.personaltelco.net/'; 
-    </script>
-    <script src="http://static.personaltelco.net/js/ptp-splash-server.min.js"></script>
-
-## Getting it installed on a router and PTP_VARNAME_PTP variables
-
-The ptp-splash-page htdocs directory is consumed as part of the FOOCAB.pl build process of the [ptp-openwrt-files repo](https://github.com/personaltelco/ptp-openwrt-files/)
-
-Specifically these files are placed in the /www directory
-
-The FOOCAB.pl script replaces all PTP_VARNAME_PTP values with information in this file:
-
-https://github.com/personaltelco/openwrt-files/blob/master/nodedb.txt
-
-TODO decide how to integrate the pages here into the ptp-open-wrt repo's www directory
-
-https://github.com/personaltelco/ptp-openwrt-files/tree/master/www
-
-I think it should be a git submodule of a sparse checkout like this:  
-https://gist.github.com/johnhunter/3333533
-
-
-The original requirements, which lays out just a bit of thought around the splashpage
-
+More information can be found in the Personal Telco wiki:
 https://personaltelco.net/wiki/NewCaptivePortalFeatures
 
-more on captive portals....  
 
-https://personaltelco.net/wiki/CaptivePortal
+Deployment
+----------
 
-tools used:
-       Bootstrap - http://getbootstrap.com
-       Dust - http://linkedin.github.io/dustjs
+The `htdocs` directory is consumed as part of the `FOOCAB.pl` build process.
+This script can be found in the
+[ptp-openwrt-files repo](https://github.com/personaltelco/ptp-openwrt-files/).
 
+Specifically, these files are placed in the `/www` directory inside the
+generated node filesystem.
+
+The `FOOCAB.pl` script also replaces all `PTP_VARNAME_PTP` values with
+information stored in the PTP API database.
