@@ -1,6 +1,7 @@
 body {
     padding-top: 56px;
     padding-bottom: 40px;
+    position: relative;
     color: #5a5a5a;
 }
 
@@ -14,7 +15,7 @@ body {
     text-align: center;
     color: #f8f9fa;
     background-color: #6c757d;
-    margin-top: 2em;
+    margin-top: 1em;
 }
 
 .carousel img {
@@ -34,13 +35,17 @@ body {
 }
 
 .large {
-    font-size: 4em;
+    font-size: 3em;
+    height: 1.5em;
 }
 
 .terms {
     height: 30em;
     text-align: justify;
     overflow: auto;
-    padding-right: 1em;
-    right: 1.5em;
+}
+
+#aboutNodes img {
+    max-height: 223px;
+    max-width: 223px;
 }
