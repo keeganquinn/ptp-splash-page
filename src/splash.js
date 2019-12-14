@@ -66,4 +66,9 @@ document.addEventListener('DOMContentLoaded', () => {
       $('#item_name').val('Personal Telco Project - Donation');
     }
   });
+
+  // Improve navbar behavior
+  $('.navbar a').on('click', () => {
+    $('.collapse').collapse('hide');
+  });
 });
